@@ -1,3 +1,4 @@
+import 'package:decimal/decimal.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
@@ -50,43 +51,37 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: AppBar(
         title: Text('name').tr(),
       ),
-      body: Table(
-        border: TableBorder.all(
-            color: Colors.black26,
-            width: 1,
-            style: BorderStyle.none
-        ),
-        children: [
-          TableRow(children: [
-            TableCell(child: Text('date').tr()),
-            TableCell(child: Center(child: Text('reference').tr()),),
-            TableCell(child: Center(child: Text('credit').tr()),),
-            TableCell(child: Center(child: Text('debit').tr()),),
-            TableCell(child: Center(child: Text('total').tr()),),
-          ]),
-          TableRow(children: [
-            TableCell(
-              child: Center(child: Text('12')),
-              verticalAlignment: TableCellVerticalAlignment.middle,
-            ),
-            TableCell(
-              verticalAlignment: TableCellVerticalAlignment.middle,
-              child: Center(child: Text('Thing')),
-            ),
-            TableCell(
-              child: Center(child: Text('0')),
-              verticalAlignment: TableCellVerticalAlignment.top,
-            ),
-            TableCell(
-              child: Center(child: Text('0')),
-              verticalAlignment: TableCellVerticalAlignment.top,
-            ),
-            TableCell(
-              child: Center(child: Text('\$ 0')),
-              verticalAlignment: TableCellVerticalAlignment.top,
-            ),
-          ]),
-        ],
+      body: Padding(
+        padding: EdgeInsets.all(8),
+        child: Column(
+            children: [
+              Center(child: Text(
+                'month',
+                style: TextStyle(fontWeight: FontWeight.bold),
+              ).tr()),
+              Table(
+                children: [
+                  TableRow(children: [
+                    TableCell(child: Text('date').tr()),
+                    TableCell(child: Center(child: Text('reference').tr()),),
+                    TableCell(child: Center(child: Text('credit').tr()),),
+                    TableCell(child: Center(child: Text('debit').tr()),),
+                    TableCell(child: Text(
+                      'total',
+                      textAlign: TextAlign.end,
+                    ).tr(),
+                    ),
+                  ]),
+                  createTableRow(AccountingRowFormatted(
+                    "12",
+                    "Things\n\n\ns",
+                    "100",
+                    "100",
+                    "\$ 0",
+                  )),
+                ],
+              ),
+            ]),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _incrementCounter,
@@ -95,4 +90,42 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
     );
   }
+
+  TableRow createTableRow(AccountingRowFormatted strings) {
+    return TableRow(children: [
+      TableCell(
+        child: Text(strings.date),
+        verticalAlignment: TableCellVerticalAlignment.top,
+      ),
+      TableCell(
+        verticalAlignment: TableCellVerticalAlignment.middle,
+        child: Center(child: Text(strings.reference)),
+      ),
+      TableCell(
+        child: Center(child: Text(strings.row3.toString())),
+        verticalAlignment: TableCellVerticalAlignment.bottom,
+      ),
+      TableCell(
+        child: Center(child: Text(strings.row4.toString())),
+        verticalAlignment: TableCellVerticalAlignment.bottom,
+      ),
+      TableCell(
+        child: Text(
+          strings.total,
+          textAlign: TextAlign.end,
+        ),
+        verticalAlignment: TableCellVerticalAlignment.bottom,
+      ),
+    ]);
+  }
+}
+
+class AccountingRowFormatted {
+  AccountingRowFormatted(this.date, this.reference, this.row3, this.row4, this.total);
+
+  final String date;
+  final String reference;
+  final String row3;
+  final String row4;
+  final String total;
 }

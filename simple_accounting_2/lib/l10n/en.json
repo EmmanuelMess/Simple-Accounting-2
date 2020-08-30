@@ -1,5 +1,8 @@
 {
   "name": "Simple Accouting 2",
+
+  "month": "Month",
+
   "date": "Date",
   "reference": "Reference",
   "credit": "Credit",
