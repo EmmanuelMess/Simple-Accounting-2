@@ -37,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
+  int _counter = 1;
 
   void _incrementCounter() {
     setState(() {
@@ -59,64 +59,75 @@ class _MyHomePageState extends State<MyHomePage> {
                 'month',
                 style: TextStyle(fontWeight: FontWeight.bold),
               ).tr()),
-              Table(
-                children: [
-                  TableRow(children: [
-                    TableCell(child: Text('date').tr()),
-                    TableCell(child: Center(child: Text('reference').tr()),),
-                    TableCell(child: Center(child: Text('credit').tr()),),
-                    TableCell(child: Center(child: Text('debit').tr()),),
-                    TableCell(child: Text(
-                      'total',
-                      textAlign: TextAlign.end,
-                    ).tr(),
-                    ),
-                  ]),
-                  createTableRow(AccountingRowFormatted(
-                    "12",
-                    "Things\n\n\ns",
-                    "100",
-                    "100",
-                    "\$ 0",
-                  )),
-                ],
+              SingleChildScrollView(
+                scrollDirection: Axis.vertical,
+                child: FittedBox(
+                  child: DataTable(
+                    showCheckboxColumn: false,
+                    columns: <DataColumn>[
+                      DataColumn(
+                          label: Text('date').tr()
+                      ),
+                      DataColumn(
+                          label: Text('reference').tr()
+                      ),
+                      DataColumn(
+                          label: Text('credit').tr()
+                      ),
+                      DataColumn(
+                          label: Text('debit').tr()
+                      ),
+                      DataColumn(
+                        label: Text(
+                          'total',
+                          textAlign: TextAlign.end,
+                        ).tr(),
+                      ),
+                    ],
+                    rows: [
+                      createTableRow(AccountingRowFormatted(
+                        "12",
+                        "Things\n\n\ns",
+                        "100",
+                        "100",
+                        "\$ 0",
+                      )),
+                    ],
+                  ),
+                ),
               ),
             ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
+        onPressed: () {
+          showBottomSheet(
+            context: context,
+            builder: (context) =>
+                Container(
+                  color: Colors.red,
+                ),
+          );
+        },
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
     );
   }
 
-  TableRow createTableRow(AccountingRowFormatted strings) {
-    return TableRow(children: [
-      TableCell(
-        child: Text(strings.date),
-        verticalAlignment: TableCellVerticalAlignment.top,
-      ),
-      TableCell(
-        verticalAlignment: TableCellVerticalAlignment.middle,
-        child: Center(child: Text(strings.reference)),
-      ),
-      TableCell(
-        child: Center(child: Text(strings.row3.toString())),
-        verticalAlignment: TableCellVerticalAlignment.bottom,
-      ),
-      TableCell(
-        child: Center(child: Text(strings.row4.toString())),
-        verticalAlignment: TableCellVerticalAlignment.bottom,
-      ),
-      TableCell(
-        child: Text(
-          strings.total,
-          textAlign: TextAlign.end,
-        ),
-        verticalAlignment: TableCellVerticalAlignment.bottom,
-      ),
-    ]);
+  DataRow createTableRow(AccountingRowFormatted strings) {
+    return DataRow(cells: [
+      DataCell(Text(strings.date, textAlign: TextAlign.start)),
+      DataCell(Text(strings.reference)),
+      DataCell(Text(strings.row3)),
+      DataCell(Text(strings.row4)),
+      DataCell(Text(strings.total, textAlign: TextAlign.end)),
+    ],
+      onSelectChanged: (bool selected) {
+        if (selected) {
+
+        }
+      },
+    );
   }
 }
 
