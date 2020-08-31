@@ -7,5 +7,7 @@
   "reference": "Reference",
   "credit": "Credit",
   "debit": "Debit",
-  "total": "Total"
+  "total": "Total",
+  "edit": "EDIT",
+  "changeOrdering": "CHANGE\nORDERING"
 }
