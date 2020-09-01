@@ -3,14 +3,23 @@ import 'package:flutter/cupertino.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
+import 'package:simple_accounting_2/db/dao/month_dao.dart';
 
-void main() {
+import 'db/database.dart';
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final database = await $FloorAppDatabase.databaseBuilder('app_database.db')
+      .build();
+
   runApp(EasyLocalization(
     supportedLocales: [Locale('en'), Locale('es')],
     path: 'lib/l10n',
     fallbackLocale: Locale('en'),
     useOnlyLangCode: true,
-    child: MyApp(),
+    child: MyApp(database.accountRowDao, database.monthDao),
   ));
 }
 
@@ -22,6 +31,11 @@ ThemeData theme() {
 }
 
 class MyApp extends StatelessWidget {
+  final AccountRowDao accountRowDao;
+  final MonthDao monthDao;
+
+  const MyApp(this.accountRowDao, this.monthDao);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

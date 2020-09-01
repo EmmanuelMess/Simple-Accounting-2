@@ -7,24 +7,32 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
+import 'package:simple_accounting_2/db/dao/month_dao.dart';
+import 'package:simple_accounting_2/db/database.dart';
 
 import 'package:simple_accounting_2/main.dart';
 
 void main() {
+  AppDatabase database;
+  AccountRowDao accountRowDao;
+  MonthDao monthDao;
+
+  setUp(() async {
+    database = await $FloorAppDatabase
+        .inMemoryDatabaseBuilder()
+        .build();
+    accountRowDao = database.accountRowDao;
+    monthDao = database.monthDao;
+  });
+
+  tearDown(() async {
+    await database.close();
+  });
+
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(MyApp());
+    await tester.pumpWidget(MyApp(accountRowDao, monthDao));
 
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    //TODO add tests
   });
 }

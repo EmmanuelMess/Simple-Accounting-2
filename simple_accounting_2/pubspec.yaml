@@ -24,11 +24,19 @@ dependencies:
   flutter:
     sdk: flutter
 
+  floor: ^0.13.0
   easy_localization: ^2.3.2
   decimal: ^0.3.0
   modal_bottom_sheet: ^0.2.0+1
 
+dependency_overrides:
+  analyzer: '0.39.14'
+
 dev_dependencies:
+
+  floor_generator: ^0.14.0
+  build_runner: ^1.7.3
+
   flutter_test:
     sdk: flutter
 
