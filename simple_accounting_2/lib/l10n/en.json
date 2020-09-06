@@ -9,5 +9,9 @@
   "debit": "Debit",
   "total": "Total",
   "edit": "EDIT",
-  "changeOrdering": "CHANGE\nORDERING"
+  "changeOrdering": "CHANGE\nORDERING",
+
+  "addRow": "ADD ROW",
+  "save": "SAVE",
+  "enterReference": "Enter a reference"
 }

@@ -5,6 +5,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
 import 'package:simple_accounting_2/db/dao/month_dao.dart';
+import 'package:simple_accounting_2/add_row.dart';
 
 import 'db/database.dart';
 
@@ -27,6 +28,9 @@ ThemeData theme() {
   return ThemeData(
     primarySwatch: Colors.amber, //TODO better colors
     visualDensity: VisualDensity.adaptivePlatformDensity,
+  ).copyWith(
+    inputDecorationTheme: const InputDecorationTheme(
+        border: OutlineInputBorder()),
   );
 }
 
@@ -123,7 +127,10 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-
+          showDialog(
+            context: context,
+            builder: (BuildContext context) => AddRowDialog(),
+          );
         },
         tooltip: 'Increment',
         child: Icon(Icons.add),
