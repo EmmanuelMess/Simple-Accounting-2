@@ -8,6 +8,7 @@ import 'package:simple_accounting_2/db/dao/month_dao.dart';
 import 'package:simple_accounting_2/add_row.dart';
 
 import 'db/database.dart';
+import 'formatter/formatted_row.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -239,14 +240,4 @@ class _MyHomePageState extends State<MyHomePage> {
       },
     );
   }
-}
-
-class AccountingRowFormatted {
-  AccountingRowFormatted(this.date, this.reference, this.row3, this.row4, this.total);
-
-  final String date;
-  final String reference;
-  final String row3;
-  final String row4;
-  final String total;
 }
