@@ -14,3 +14,4 @@ abstract class AppDatabase extends FloorDatabase {
   AccountRowDao get accountRowDao;
   MonthDao get monthDao;
 }
+

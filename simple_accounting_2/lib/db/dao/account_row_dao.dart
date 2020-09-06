@@ -10,7 +10,7 @@ abstract class AccountRowDao {
   Future<void> deleteAccountRowById(AccountRow accountRow);
 
   @insert
-  Future<void> insertAccountRow(AccountRow accountRow);
+  Future<void> insertAccountRow(AccountRow accountRow);//TODO update month for row
 
   @Query('SELECT * FROM AccountRow ORDER BY AccountRow.position ASC')
   Stream<List<AccountRow>> findAllAccountRowsAsStream();
