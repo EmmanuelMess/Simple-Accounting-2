@@ -152,92 +152,44 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
       onSelectChanged: (bool selected) {
         if (selected) {
-          showBarModalBottomSheet(
-            context: context,
-            builder: (context, scrollController) =>
-                Material(
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Column(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Row(
-                          mainAxisSize: MainAxisSize.max,
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(4),
-                              child: RaisedButton(
-                                child: Text('edit').tr(),
-                                onPressed: () {
-
-                                },
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.all(4),
-                              child: RaisedButton(
-                                child: Text(
-                                  'changeOrdering',
-                                  textAlign: TextAlign.center,
-                                ).tr(),
-                                onPressed: () {
-
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                        Container(
-                          alignment: AlignmentDirectional.centerStart,
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-
-                            children: [
-                              Text(
-                                'date'.tr() + ': ' + strings.date,
-                                style: TABLE_ROW_TEXT_SIZE,
-                              ),
-                              //TODO use params in translation
-                              Text(
-                                'reference'.tr() + ': ',
-                                style: TABLE_ROW_TEXT_SIZE,
-                              ),
-                              //TODO use params in translation
-                              Padding(
-                                padding: EdgeInsets.all(16),
-                                child: Text(
-                                  strings.reference,
-                                  style: TABLE_ROW_TEXT_SIZE,
-                                ),
-                              ),
-                              //TODO use params in translation
-                              Text(
-                                'debit'.tr() + ': ' + strings.row3,
-                                style: TABLE_ROW_TEXT_SIZE,
-                              ),
-                              //TODO use params in translation
-                              Text(
-                                'credit'.tr() + ': ' + strings.row4,
-                                style: TABLE_ROW_TEXT_SIZE,
-                              ),
-                              //TODO use params in translation
-                              Text(
-                                '(' + 'total'.tr() + ': ' + strings.total + ')',
-                                style: TABLE_ROW_TEXT_SIZE,
-                              ),
-                              //TODO use params in translation
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-          );
+          _showRowBottomSheet(context);
         }
       },
+    );
+  }
+
+  void _showRowBottomSheet(context){
+    showModalBottomSheet(
+        context: context,
+        builder: (BuildContext bc){
+          return Container(
+            child: Wrap(
+              children: <Widget>[
+                ListTile(
+                    leading: Icon(Icons.edit),
+                    title: Text('edit').tr(),
+                    onTap: () {
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                    leading: Icon(Icons.sort),
+                    title: Text('changeOrdering').tr(),
+                    onTap: () {
+                      Navigator.pop(context);
+                    }
+                ),
+                ListTile(
+                  leading: Icon(Icons.delete_forever),
+                  title: Text('delete').tr(),
+                  onTap: () {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+          );
+        }
     );
   }
 }

@@ -8,8 +8,10 @@
   "credit": "Credit",
   "debit": "Debit",
   "total": "Total",
-  "edit": "EDIT",
-  "changeOrdering": "CHANGE\nORDERING",
+
+  "edit": "Edit",
+  "delete": "Delete",
+  "changeOrdering": "Change ordering",
 
   "addRow": "Add row",
   "save": "SAVE",
