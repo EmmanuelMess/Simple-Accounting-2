@@ -11,7 +11,9 @@
   "edit": "EDIT",
   "changeOrdering": "CHANGE\nORDERING",
 
-  "addRow": "ADD ROW",
+  "addRow": "Add row",
   "save": "SAVE",
-  "enterReference": "Enter a reference"
+  "cancel": "CANCEL",
+  "enterReference": "Enter a reference",
+  "enterValidNumber": "Please enter a valid number"
 }
