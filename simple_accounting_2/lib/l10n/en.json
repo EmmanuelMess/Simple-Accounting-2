@@ -1,6 +1,10 @@
 {
   "name": "Simple Accouting 2",
 
+  "about": "About",
+  "description": "Made with love\nby Emmanuel Messulam (EmmanuelMess)",
+  "version": "Version {}",
+
   "month": "Month",
 
   "date": "Date",

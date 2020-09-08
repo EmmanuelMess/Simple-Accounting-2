@@ -7,6 +7,7 @@ import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
 import 'package:simple_accounting_2/db/dao/month_dao.dart';
 import 'package:simple_accounting_2/add_row.dart';
 
+import 'about.dart';
 import 'db/database.dart';
 import 'formatter/formatted_row.dart';
 
@@ -75,6 +76,17 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       appBar: AppBar(
         title: Text('name').tr(),
+        actions: <Widget>[
+          IconButton(
+            icon: const Icon(Icons.info_outline),
+            tooltip: 'about'.tr(),
+            onPressed: () =>
+                Navigator.push(
+                  context,
+                  _slideRouteAnimation((_, __, ___) => AboutPage()),
+                ),
+          )
+        ],
       ),
       body: Padding(
         padding: EdgeInsets.all(8),
@@ -136,6 +148,25 @@ class _MyHomePageState extends State<MyHomePage> {
         tooltip: 'Increment',
         child: Icon(Icons.add),
       ),
+    );
+  }
+
+  Route _slideRouteAnimation(final RoutePageBuilder pageBuilder) {
+    return PageRouteBuilder(
+      pageBuilder: pageBuilder,
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        return SlideTransition(
+          position: animation.drive(
+            Tween(
+              begin: Offset(1.0, 0.0),
+              end: Offset.zero,
+            ).chain(
+              CurveTween(curve: Curves.ease),
+            ),
+          ),
+          child: child,
+        );
+      },
     );
   }
 
