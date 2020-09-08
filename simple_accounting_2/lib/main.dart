@@ -1,6 +1,4 @@
-import 'package:decimal/decimal.dart';
 import 'package:flutter/cupertino.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
@@ -10,6 +8,7 @@ import 'package:simple_accounting_2/add_row.dart';
 import 'about.dart';
 import 'db/database.dart';
 import 'formatter/formatted_row.dart';
+import 'months.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -47,7 +46,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       onGenerateTitle: (BuildContext context) => 'name'.tr(),
       theme: theme(),
-      home: MyHomePage(),
+      home: MyHomePage(this.accountRowDao, this.monthDao),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -56,13 +55,21 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  final AccountRowDao accountRowDao;
+  final MonthDao monthDao;
+
+  MyHomePage(this.accountRowDao, this.monthDao, {Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(this.accountRowDao, this.monthDao);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  final AccountRowDao accountRowDao;
+  final MonthDao monthDao;
+
+  _MyHomePageState(this.accountRowDao, this.monthDao) : super();
+
   int _counter = 1;
 
   void _incrementCounter() {
@@ -78,6 +85,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text('name').tr(),
         actions: <Widget>[
           IconButton(
+            icon: const Icon(Icons.history),
+            tooltip: 'months'.tr(),
+            onPressed: () =>
+                Navigator.push(
+                  context,
+                  _slideRouteAnimation((_, __, ___) => MonthsPage(this.monthDao)),
+                ),
+          ),
+          IconButton(
             icon: const Icon(Icons.info_outline),
             tooltip: 'about'.tr(),
             onPressed: () =>
@@ -85,7 +101,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   context,
                   _slideRouteAnimation((_, __, ___) => AboutPage()),
                 ),
-          )
+          ),
         ],
       ),
       body: Padding(
