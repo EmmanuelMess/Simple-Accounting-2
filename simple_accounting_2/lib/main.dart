@@ -21,7 +21,7 @@ Future<void> main() async {
     path: 'lib/l10n',
     fallbackLocale: Locale('en'),
     useOnlyLangCode: true,
-    child: MyApp(database.accountRowDao, database.monthDao),
+    child: SimpleAccounting2App(database.accountRowDao, database.monthDao),
   ));
 }
 
@@ -35,18 +35,18 @@ ThemeData theme() {
   );
 }
 
-class MyApp extends StatelessWidget {
+class SimpleAccounting2App extends StatelessWidget {
   final AccountRowDao accountRowDao;
   final MonthDao monthDao;
 
-  const MyApp(this.accountRowDao, this.monthDao);
+  const SimpleAccounting2App(this.accountRowDao, this.monthDao);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       onGenerateTitle: (BuildContext context) => 'name'.tr(),
       theme: theme(),
-      home: MyHomePage(this.accountRowDao, this.monthDao),
+      home: MainPage(this.accountRowDao, this.monthDao),
       localizationsDelegates: context.localizationDelegates,
       supportedLocales: context.supportedLocales,
       locale: context.locale,
@@ -54,29 +54,21 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatefulWidget {
+class MainPage extends StatefulWidget {
   final AccountRowDao accountRowDao;
   final MonthDao monthDao;
 
-  MyHomePage(this.accountRowDao, this.monthDao, {Key key}) : super(key: key);
+  MainPage(this.accountRowDao, this.monthDao, {Key key}) : super(key: key);
 
   @override
-  _MyHomePageState createState() => _MyHomePageState(this.accountRowDao, this.monthDao);
+  _MainPageState createState() => _MainPageState(this.accountRowDao, this.monthDao);
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class _MainPageState extends State<MainPage> {
   final AccountRowDao accountRowDao;
   final MonthDao monthDao;
 
-  _MyHomePageState(this.accountRowDao, this.monthDao) : super();
-
-  int _counter = 1;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
+  _MainPageState(this.accountRowDao, this.monthDao) : super();
 
   @override
   Widget build(BuildContext context) {

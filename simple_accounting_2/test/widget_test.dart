@@ -31,7 +31,7 @@ void main() {
   });
 
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    await tester.pumpWidget(MyApp(accountRowDao, monthDao));
+    await tester.pumpWidget(SimpleAccounting2App(accountRowDao, monthDao));
 
     //TODO add tests
   });
