@@ -10,7 +10,10 @@ abstract class MonthDao {
   Future<void> deleteMonthById(Month accountRow);
 
   @insert
-  Future<void> insertMonth(Month accountRow);
+  Future<int> insertMonth(Month accountRow);
+
+  @Query('SELECT * FROM Month WHERE (month = :month AND year = :year AND currency = :currency)')
+  Future<Month> findMonth(String month, String year, String currency);
 
   @Query('SELECT * FROM Month ORDER BY Month.month ASC')
   Stream<List<Month>> findAllMonthsAsStream();

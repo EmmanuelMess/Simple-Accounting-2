@@ -2,6 +2,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
+import 'package:simple_accounting_2/db/dao/account_row_dao.dart';
+import 'package:simple_accounting_2/db/dao/month_dao.dart';
+import 'package:simple_accounting_2/db/entity/account_row.dart';
 
 import 'logic/decimal_conversion.dart';
 
@@ -13,9 +16,11 @@ class Consts {
 }
 
 class AddRowDialog extends StatelessWidget {
+  final MonthDao monthDao;
+  final AccountRowDao accountRowDao;
   final String total;
 
-  AddRowDialog({this.total});
+  AddRowDialog(this.monthDao, this.accountRowDao, {this.total});
 
   @override
   Widget build(BuildContext context) {
@@ -25,31 +30,37 @@ class AddRowDialog extends StatelessWidget {
       ),
       elevation: 0.0,
       backgroundColor: Colors.transparent,
-      child: AddRowWidget(total: this.total),
+      child: AddRowWidget(this.monthDao, this.accountRowDao, total: this.total),
     );
   }
 }
 
 class AddRowWidget extends StatefulWidget {
+  final MonthDao monthDao;
+  final AccountRowDao accountRowDao;
+
   String date, reference, debit, credit;
   final String total;
 
-  AddRowWidget({
+  AddRowWidget(this.monthDao, this.accountRowDao, {
     this.total,
     Key key,
   }) : super(key: key);
 
   @override
   _AddRowWidgetState createState() =>
-      _AddRowWidgetState(total: this.total);
+      _AddRowWidgetState(this.monthDao, this.accountRowDao, total: this.total);
 }
 
 class _AddRowWidgetState extends State<AddRowWidget> {
+  final MonthDao monthDao;
+  final AccountRowDao accountRowDao;
+
   String reference, debit, credit;
   DateTime date;
   final String total;
 
-  _AddRowWidgetState({this.total});
+  _AddRowWidgetState(this.monthDao, this.accountRowDao, {this.total});
 
   final _formKey = GlobalKey<FormState>();
   final _now = DateTime.now();
@@ -112,14 +123,8 @@ class _AddRowWidgetState extends State<AddRowWidget> {
                       child: Text('save').tr(),
                       onPressed: () async {
                         if (_formKey.currentState.validate()) {
-                          /*
-                      if (id == null) {
-                        await deadlineDao.insertDeadline(Deadline(
-                          null,
-                          title,
-                          deadline.millisecondsSinceEpoch,
-                        ));
-                      } else {
+                          await accountRowDao.insertGeneratedAccountRow(this.monthDao, date, reference, credit, debit, null);
+                          /*if (id != null) {TODO for editing row
                         await deadlineDao.updateDeadline(Deadline(
                           id,
                           title,

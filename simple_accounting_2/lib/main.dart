@@ -150,7 +150,7 @@ class _MainPageState extends State<MainPage> {
         onPressed: () {
           showDialog(
             context: context,
-            builder: (BuildContext context) => AddRowDialog(),
+            builder: (BuildContext context) => AddRowDialog(this.monthDao, this.accountRowDao),
           );
         },
         tooltip: 'Increment',
